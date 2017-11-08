@@ -9,5 +9,12 @@ var todosList = {
         console.log(this.todos[i].todoText);
       }
     }
+  },
+  addTodos: function(todoText) {
+    this.todos.push({
+      todoText: todoText,
+      completed: false
+    });
+    this.displayTodos();
   }
 }
