@@ -6,7 +6,11 @@ var todosList = {
     } else {
       console.log('My todos:');
       for(var i = 0; i < this.todos.length; i++) {
-        console.log(this.todos[i].todoText);
+        if(this.todos[i].completed) {
+          console.log('(x)', this.todos[i].todoText);
+        } else {
+          console.log('( )', this.todos[i].todoText);
+        }
       }
     }
   },
@@ -29,11 +33,33 @@ var todosList = {
     var todo = this.todos[index];
     todo.completed = !todo.completed;
     this.displayTodos();
+  },
+  toggleAll: function() {
+    var totalTodos = this.todos.length;
+    var completedTodos = 0;
+    for(var i = 0; i < this.todos.length; i++) {
+      if(this.todos[i].completed) {
+        completedTodos += 1;
+      }
+    }
+    if(completedTodos === totalTodos) {
+      for(var i = 0; i < this.todos.length; i++) {
+        this.todos[i].completed = false;
+      }
+    } else {
+      for(var i = 0; i < this.todos.length; i++) {
+        this.todos[i].completed = true;
+      }
+    }
+    this.displayTodos();
   }
 }
 
 
 todosList.displayTodos();
-todosList.addTodos('item 6');
+todosList.addTodos('item 1');
+todosList.addTodos('item 2');
 todosList.changeTodos('item 4', 0);
 todosList.toggleCompleted(0);
+todosList.toggleAll();
+todosList.toggleAll();
