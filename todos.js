@@ -62,3 +62,10 @@ console.log(displayTodosButton);
 displayTodosButton.addEventListener('click', function() {
   todoList.displayTodos();
 });
+
+var toggleAllButton = document.getElementById('toggleAllButton');
+console.log(toggleAllButton);
+
+toggleAllButton.addEventListener('click', function() {
+  todoList.toggleAll();
+});
