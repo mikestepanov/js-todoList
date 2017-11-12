@@ -4,14 +4,15 @@ var todoList = {
     if(this.todos.length === 0) {
       console.log('Your todo list is empty.')
     } else {
-      console.log('My todos:');
-      for(var i = 0; i < this.todos.length; i++) {
-        if(this.todos[i].completed) {
-          console.log('(x)', this.todos[i].todoText);
-        } else {
-          console.log('( )', this.todos[i].todoText);
-        }
-      }
+      // console.log('My todos:');
+      // for(var i = 0; i < this.todos.length; i++) {
+      //   if(this.todos[i].completed) {
+      //     console.log('(x)', this.todos[i].todoText);
+      //   } else {
+      //     console.log('( )', this.todos[i].todoText);
+      //   }
+      // }
+      view.displayTodos();
     }
   },
   addTodo: function(todoText) {
@@ -83,5 +84,24 @@ var handlers = {
     var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
     todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
     toggleCompletedPositionInput.value = '';
+  }
+}
+
+var view = {
+  displayTodos: function() {
+    var todosUl = document.querySelector('ul.todoList');
+    todosUl.innerHTML = '';
+    for(var i = 0; i < todoList.todos.length; i++) {
+      var todoLi = document.createElement('li');
+      var todoTextWithCompletion = '';
+      var todoText = todoList.todos[i].todoText;
+      if (todoList.todos[i].completed) {
+        todoTextWithCompletion = '(x) ' + todoText;
+      } else {
+        todoTextWithCompletion = '( ) ' + todoText;
+      }
+      todoLi.textContent = todoTextWithCompletion;
+      todosUl.appendChild(todoLi);
+    }
   }
 }
