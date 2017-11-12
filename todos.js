@@ -14,14 +14,14 @@ var todoList = {
       }
     }
   },
-  addTodos: function(todoText) {
+  addTodo: function(todoText) {
     this.todos.push({
       todoText: todoText,
       completed: false
     });
     this.displayTodos();
   },
-  changeTodos: function(newEl, index) {
+  changeTodo: function(newEl, index) {
     this.todos[index].todoText = newEl;
     this.displayTodos();
   },
@@ -64,7 +64,14 @@ var handlers = {
   },
   addTodo: function() {
     var addTodoTextInput = document.getElementById('addTodoTextInput');
-    todoList.addTodos(addTodoTextInput.value);
+    todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = '';
+  },
+  changeTodo: function() {
+    var changeTodoPosition = document.getElementById('changeTodoPositionInput');
+    var changeTodoTextInput = document.getElementById('changeTodoTextInput');
+    todoList.changeTodo(changeTodoTextInput.value, changeTodoPositionInput.value);
+    changeTodoPositionInput.value = '';
+    changeTodoTextInput.value = '';
   }
 }
