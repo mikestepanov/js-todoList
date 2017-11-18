@@ -19,20 +19,18 @@ var todoList = {
   toggleAll: function() {
     var totalTodos = this.todos.length;
     var completedTodos = 0;
-    for(var i = 0; i < this.todos.length; i++) {
-      if(this.todos[i].completed) {
+    this.todos.forEach(function(todo) {
+      if(todo.completed === true) {
         completedTodos += 1;
       }
-    }
-    if(completedTodos === totalTodos) {
-      for(var i = 0; i < this.todos.length; i++) {
-        this.todos[i].completed = false;
+    });
+    this.todos.forEach(function(todo) {
+      if(completedTodos === totalTodos) {
+        todo.completed = false;
+      } else {
+        todo.completed = true;
       }
-    } else {
-      for(var i = 0; i < this.todos.length; i++) {
-        this.todos[i].completed = true;
-      }
-    }
+    });
   }
 }
 
@@ -74,35 +72,36 @@ var view = {
   displayTodos: function() {
     var todosUl = document.querySelector('ul.todoList');
     todosUl.innerHTML = '';
-    for(var i = 0; i < todoList.todos.length; i++) {
+    todoList.todos.forEach(function(todo, position) {
       var todoLi = document.createElement('li');
       var todoTextWithCompletion = '';
-      var todoText = todoList.todos[i].todoText;
-      if (todoList.todos[i].completed) {
-        todoTextWithCompletion = '(x) ' + todoText;
+      if(todo.completed) {
+        todoTextWithCompletion = '(x) ' + todo.todoText;
       } else {
-        todoTextWithCompletion = '( ) ' + todoText;
+        todoTextWithCompletion = '( ) ' + todo.todoText;
       }
-      todoLi.id = i;
+      todoLi.id = position;
       todoLi.textContent = todoTextWithCompletion;
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
-    }
+    }, this);
   },
   createDeleteButton: function() {
     var deleteButton =  document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
     return deleteButton;
+  },
+  setUpEventListeners: function() {
+    var todosUl = document.querySelector('ul.todoList');
+    todosUl.addEventListener('click', function(event) {
+      var elementClicked = event.target;
+      if (elementClicked.className === 'deleteButton') {
+        var id = parseInt(elementClicked.parentNode.id);
+        handlers.deleteTodo(id);
+      }
+    });
   }
-}
+};
 
-var todosUl = document.querySelector('ul.todoList');
-
-todosUl.addEventListener('click', function(event) {
-  var elementClicked = event.target;
-  if (elementClicked.className === 'deleteButton') {
-    var id = parseInt(elementClicked.parentNode.id);
-    handlers.deleteTodo(id);
-  }
-});
+view.setUpEventListeners();
