@@ -60,10 +60,8 @@ var handlers = {
     todoList.deleteTodo(position);
     view.displayTodos();
   },
-  toggleCompleted: function() {
-    var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
-    todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
-    toggleCompletedPositionInput.value = '';
+  toggleCompleted: function(position) {
+    todoList.toggleCompleted(position);
     view.displayTodos();
   }
 }
@@ -98,7 +96,7 @@ var view = {
     toggleButton.textContent = 'Toggle';
     toggleButton.className = 'toggleButton';
     return toggleButton;
-  }
+  },
   setUpEventListeners: function() {
     var todosUl = document.querySelector('ul.todoList');
     todosUl.addEventListener('click', function(event) {
