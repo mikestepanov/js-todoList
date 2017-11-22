@@ -111,6 +111,9 @@ const view = {
         handlers.toggleCompleted(id);
       }
     });
+    todosUl.addEventListener('mouseover', function(event) {
+      let elementMousedOver = event.target;
+    });
   }
 };
 
