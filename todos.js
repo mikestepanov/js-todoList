@@ -1,4 +1,4 @@
-var todoList = {
+const todoList = {
   todos: [],
   addTodo: function(todoText) {
     this.todos.push({
@@ -13,18 +13,18 @@ var todoList = {
     this.todos.splice(index, 1);
   },
   toggleCompleted: function(index) {
-    var todo = this.todos[index];
+    let todo = this.todos[index];
     todo.completed = !todo.completed;
   },
   toggleAll: function() {
-    var totalTodos = this.todos.length;
-    var completedTodos = 0;
-    this.todos.forEach(function(todo) {
+    let totalTodos = this.todos.length;
+    let completedTodos = 0;
+    this.todos.forEach((todo) => {
       if(todo.completed === true) {
         completedTodos += 1;
       }
     });
-    this.todos.forEach(function(todo) {
+    this.todos.forEach((todo) => {
       if(completedTodos === totalTodos) {
         todo.completed = false;
       } else {
@@ -34,7 +34,7 @@ var todoList = {
   }
 }
 
-var handlers = {
+const handlers = {
   displayTodos: function() {
     view.displayTodos();
   },
@@ -43,14 +43,14 @@ var handlers = {
     view.displayTodos();
   },
   addTodo: function() {
-    var addTodoTextInput = document.getElementById('addTodoTextInput');
+    let addTodoTextInput = document.getElementById('addTodoTextInput');
     todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = '';
     view.displayTodos();
   },
   changeTodo: function() {
-    var changeTodoPosition = document.getElementById('changeTodoPositionInput');
-    var changeTodoTextInput = document.getElementById('changeTodoTextInput');
+    let changeTodoPosition = document.getElementById('changeTodoPositionInput');
+    let changeTodoTextInput = document.getElementById('changeTodoTextInput');
     todoList.changeTodo(changeTodoTextInput.value, changeTodoPositionInput.valueAsNumber);
     changeTodoPositionInput.value = '';
     changeTodoTextInput.value = '';
@@ -66,13 +66,14 @@ var handlers = {
   }
 }
 
-var view = {
+const view = {
   displayTodos: function() {
-    var todosUl = document.querySelector('ul.todoList');
+    let todosUl = document.querySelector('ul.todoList');
     todosUl.innerHTML = '';
     todoList.todos.forEach(function(todo, position) {
-      var todoLi = document.createElement('li');
-      var todoTextWithCompletion = '';
+      let todoLi = document.createElement('li');
+      todoLi.className = 'todoLi';
+      let todoTextWithCompletion = '';
       if(todo.completed) {
         todoTextWithCompletion = '(x) ' + todo.todoText;
       } else {
@@ -86,9 +87,10 @@ var view = {
     }, this);
   },
   createDeleteButton: function() {
-    var deleteButton = document.createElement('button');
+    let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
+    deleteButton.style.display = 'none';
     return deleteButton;
   },
   createToggleButton: function() {
@@ -98,14 +100,14 @@ var view = {
     return toggleButton;
   },
   setUpEventListeners: function() {
-    var todosUl = document.querySelector('ul.todoList');
+    let todosUl = document.querySelector('ul.todoList');
     todosUl.addEventListener('click', function(event) {
-      var elementClicked = event.target;
+      let elementClicked = event.target;
       if (elementClicked.className === 'deleteButton') {
-        var id = parseInt(elementClicked.parentNode.id);
+        let id = parseInt(elementClicked.parentNode.id);
         handlers.deleteTodo(id);
       } else if (elementClicked.className === 'toggleButton') {
-        var id = parseInt(elementClicked.parentNode.id);
+        let id = parseInt(elementClicked.parentNode.id);
         handlers.toggleCompleted(id);
       }
     });
