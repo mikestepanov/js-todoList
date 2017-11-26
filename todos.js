@@ -48,12 +48,8 @@ const handlers = {
     addTodoTextInput.value = '';
     view.displayTodos();
   },
-  changeTodo: function() {
-    let changeTodoPosition = document.getElementById('changeTodoPositionInput');
-    let changeTodoTextInput = document.getElementById('changeTodoTextInput');
-    todoList.changeTodo(changeTodoTextInput.value, changeTodoPositionInput.valueAsNumber);
-    changeTodoPositionInput.value = '';
-    changeTodoTextInput.value = '';
+  changeTodo: function(text, position) {
+    todoList.changeTodo(text, positon);
     view.displayTodos();
   },
   deleteTodo: function(position) {
@@ -73,31 +69,41 @@ const view = {
     todoList.todos.forEach(function(todo, position) {
       let todoLi = document.createElement('li');
       todoLi.className = 'todoLi';
-      let todoTextWithCompletion = '';
       if(todo.completed) {
-        todoTextWithCompletion = '(x) ' + todo.todoText;
+        var todoTextWithCompletion = '(x) ' + todo.todoText;
       } else {
-        todoTextWithCompletion = '( ) ' + todo.todoText;
+        var todoTextWithCompletion = '( ) ' + todo.todoText;
       }
       todoLi.id = position;
       todoLi.textContent = todoTextWithCompletion;
-      todoLi.appendChild(this.createDeleteButton());
       todoLi.appendChild(this.createToggleButton());
+      todoLi.appendChild(this.createChangeButton());
+      todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
     }, this);
   },
-  createDeleteButton: function() {
-    let deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.className = 'deleteButton';
-    deleteButton.style.display = 'none';
-    return deleteButton;
-  },
   createToggleButton: function() {
-    var toggleButton = document.createElement('button');
-    toggleButton.textContent = 'Toggle';
-    toggleButton.className = 'toggleButton';
-    return toggleButton;
+    let button = document.createElement('button');
+    button.textContent = 'Toggle';
+    button.classList.add('toggleButton');
+    button.classList.add('todoLi');
+    return button;
+  },
+  createDeleteButton: function() {
+    let button = document.createElement('button');
+    button.textContent = 'Delete';
+    button.classList.add('deleteButton');
+    button.classList.add('todoLi');
+    button.style.display = 'none';
+    return button;
+  },
+  createChangeButton: function() {
+    let button = document.createElement('button');
+    button.textContent = 'Change';
+    button.classList.add('changeButton');
+    button.classList.add('todoLi');
+    button.style.display = 'none';
+    return button;
   },
   setUpEventListeners: function() {
     let todosUl = document.querySelector('ul.todoList');
@@ -110,9 +116,6 @@ const view = {
         let id = parseInt(elementClicked.parentNode.id);
         handlers.toggleCompleted(id);
       }
-    });
-    todosUl.addEventListener('mouseover', function(event) {
-      let elementMousedOver = event.target;
     });
   }
 };
