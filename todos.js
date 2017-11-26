@@ -85,23 +85,20 @@ const view = {
   createToggleButton: function() {
     let button = document.createElement('button');
     button.textContent = 'Toggle';
-    button.classList.add('toggleButton');
-    button.classList.add('todoLi');
+    button.className = 'toggleButton';
     return button;
   },
   createDeleteButton: function() {
     let button = document.createElement('button');
     button.textContent = 'Delete';
-    button.classList.add('deleteButton');
-    button.classList.add('todoLi');
+    button.className = 'deleteButton';
     button.style.display = 'none';
     return button;
   },
   createChangeButton: function() {
     let button = document.createElement('button');
     button.textContent = 'Change';
-    button.classList.add('changeButton');
-    button.classList.add('todoLi');
+    button.className = 'changeButton';
     button.style.display = 'none';
     return button;
   },
@@ -116,6 +113,22 @@ const view = {
         let id = parseInt(elementClicked.parentNode.id);
         handlers.toggleCompleted(id);
       }
+    });
+    todosUl.addEventListener('mouseover', function(event) {
+      let elementMouseOvered = event.target;
+      if(elementMouseOvered.tagName === 'BUTTON') {
+        elementMouseOvered = elementMouseOvered.parentNode;
+      }
+      elementMouseOvered.children[1].style.display = 'inline';
+      elementMouseOvered.lastChild.style.display = 'inline';
+    });
+    todosUl.addEventListener('mouseout', function(event) {
+      let elementMouseOvered = event.target;
+      if(elementMouseOvered.tagName === 'BUTTON') {
+        elementMouseOvered = elementMouseOvered.parentNode;
+      }
+      elementMouseOvered.children[1].style.display = 'none';
+      elementMouseOvered.lastChild.style.display = 'none';
     });
   }
 };
