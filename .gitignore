@@ -1,0 +1,15 @@
+#Private Files
+config.js
+
+#OSX Garbage
+.DS_Store
+
+#NPM Compiled
+node_modules
+
+#React Compiled
+bundle.js
+
+#SASS compiled
+.sass-cache
+styles.css.map
